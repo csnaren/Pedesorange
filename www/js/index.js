@@ -26,7 +26,6 @@ var app = {
     // Bind any events that are required on startup. Common events are:
     // 'load', 'deviceready', 'offline', and 'online'.
     bindEvents: function() {
-        //document.addEventListener("online", this.onLine, false);
         document.addEventListener("deviceready", this.onDeviceReady, false);
     },
     // deviceready Event Handler
@@ -60,6 +59,22 @@ var app = {
 
         console.log('Fired offline event ');
     },
+    checkConnection: function() {
+        var networkState = navigator.network.connection.type;
+
+        var states = {};
+        states[Connection.UNKNOWN]  = 'Unknown connection';
+        states[Connection.ETHERNET] = 'Ethernet connection';
+        states[Connection.WIFI]     = 'WiFi connection';
+        states[Connection.CELL_2G]  = 'Cell 2G connection';
+        states[Connection.CELL_3G]  = 'Cell 3G connection';
+        states[Connection.CELL_4G]  = 'Cell 4G connection';
+        states[Connection.NONE]     = 'No network connection';
+
+        console.log('Connection type: ' + states[networkState]);
+        return networkState;
+    },
+
     // Update DOM on a Received Event
     receivedEvent: function(id) {
         var parentElement = document.getElementById(id);
@@ -73,6 +88,12 @@ var app = {
         console.log('Registred listeners:' );
         document.addEventListener("online", this.onOnline, false);
         document.addEventListener("offline",this.onOffline, false);
+
+        if(app.checkConnection() == Connection.NONE){
+            app.onOffline();
+        }else{
+            app.onOnline();
+        }
         console.log('Received Event: ' + id);
     }
 };
