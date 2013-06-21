@@ -16,6 +16,9 @@
  * specific language governing permissions and limitations
  * under the License.
  */
+// Global InAppBrowser reference
+var iabRef = null;
+
 var app = {
     // Application Constructor
     initialize: function() {
@@ -44,9 +47,10 @@ var app = {
         var receivedElement = parentElement.querySelector('.received');
 
         receivedElement.textContent = "Connecting";
-
-        var ref = window.open('http://pedesorange.rapapp.com/m', '_self', 'location=no');
-        console.log('Fired online event ');
+        iabRef = window.open('http://pedesorange.rapapp.com/m', '_self', 'location=no');
+        iabRef.addEventListener('loadstart', this.iabLoadStart,false);
+        iabRef.addEventListener('loadstop', this.iabLoadStop,false);
+        iabRef.addEventListener('exit', this.iabClose,false);
     },
     //onOffline event handler
     onOffline:function(){
@@ -73,6 +77,18 @@ var app = {
 
         console.log('Connection type: ' + states[networkState]);
         return networkState;
+    },
+    iabLoadStart:function(event) {
+        alert(event.type + ' - ' + event.url);
+    },
+    iabLoadStop:function(event) {
+        alert(event.type + ' - ' + event.url);
+    },
+    iabClose:function(event) {
+        alert(event.type);
+        iabRef.removeEventListener('loadstart', iabLoadStart);
+        iabRef.removeEventListener('loadstop', iabLoadStop);
+        iabRef.removeEventListener('exit', iabClose);
     },
 
     // Update DOM on a Received Event
