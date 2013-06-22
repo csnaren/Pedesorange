@@ -79,13 +79,13 @@ var app = {
         return networkState;
     },
     iabLoadStart:function(event) {
-        alert(event.type + ' - ' + event.url);
+        console.log(event.type + ' - ' + event.url);
     },
     iabLoadStop:function(event) {
-        alert(event.type + ' - ' + event.url);
+        console.log(event.type + ' - ' + event.url);
     },
     iabClose:function(event) {
-        alert(event.type);
+        console.log(event.type);
         iabRef.removeEventListener('loadstart', iabLoadStart);
         iabRef.removeEventListener('loadstop', iabLoadStop);
         iabRef.removeEventListener('exit', iabClose);
