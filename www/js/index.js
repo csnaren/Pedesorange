@@ -47,9 +47,7 @@ var app = {
         var receivedElement = parentElement.querySelector('.received');
 
         receivedElement.textContent = "Connecting";
-        //iabRef = window.open('http://pedesorange.rapapp.com/m', '_self', 'location=no');
-        window.plugins.childBrowser.showWebPage('http://pedesorange.rapapp.com/m',
-            { showLocationBar: false });
+        iabRef = window.open('http://pedesorange.rapapp.com/m', '_self', 'location=no');
         //iabRef.addEventListener('loadstart', this.iabLoadStart,false);
         //iabRef.addEventListener('loadstop', this.iabLoadStop,false);
         //iabRef.addEventListener('exit', this.iabClose,false);
